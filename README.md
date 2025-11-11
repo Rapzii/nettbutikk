@@ -21,7 +21,7 @@ Pc, nettleser, MariaDB-server og rasberry pi?
 
 
 
-#Hvordan prokjektet viser kompetanse i faget:
+# Hvordan prokjektet viser kompetanse i faget:
 
 Utvikling: 
 Du lager frontend med HTML, CSS, JS og backend med Flask som henter data fra MariaDB.
