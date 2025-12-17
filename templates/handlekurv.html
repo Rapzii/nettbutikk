@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>Handlekurv</title>
+</head>
+<body>
+<h1>Handlekurv</h1>
+{% if products %}
+    <ul>
+        {% for item in products %}
+        <li>{{ item.name }} - {{ item.quantity }} stk - {{ item.subtotal }} kr</li>
+        {% endfor %}
+    </ul>
+    <p>Total: {{ total }} kr</p>
+    <a href="{{ url_for('checkout') }}"><button>Betal</button></a>
+{% else %}
+    <p>Handlekurven er tom.</p>
+{% endif %}
+<a href="{{ url_for('index') }}">Tilbake til nettbutikk</a>
+</body>
+</html>

@@ -1,20 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="no">
 <head>
-    <title>Nettbutikk</title>
+<meta charset="UTF-8">
+<title>Smartklokker Nettbutikk</title>
+<style>
+body { font-family: Arial; margin:0; background:#f2f2f2; color:#333; }
+header { background:#111; color:#fff; padding:20px; text-align:center; }
+.products { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; padding:20px; }
+.product-card { background:#fff; border-radius:12px; padding:20px; box-shadow:0 4px 10px rgba(0,0,0,0.1); text-align:center; }
+.product-card img { width:150px; height:auto; margin-bottom:10px; }
+button { background:#007bff; color:white; border:none; padding:10px; border-radius:6px; cursor:pointer; width:100%; }
+button:hover { background:#0056b3; }
+footer { background:#111; color:#aaa; text-align:center; padding:10px; margin-top:20px; }
+a { color:white; text-decoration:none; margin:0 10px; }
+.nav { text-align:right; padding:10px; background:#222; }
+</style>
 </head>
 <body>
-    <h1>Produkter</h1>
-    <ul>
-        {% for product in products %}
-        <li>
-            <h2>{{ product[1] }}</h2>
-            <p>{{ product[2] }}</p>
-            <p>Pris: ${{ product[3] }}</p>
-            <p>Lager: {{ product[4] }}</p>
-            <img src="{{ product[5] }}" alt="{{ product[1] }}">
-        </li>
-        {% endfor %}
-    </ul>
+
+<header>
+    <h1>⌚ Smartklokker Nettbutikk</h1>
+    <div class="nav">
+        {% if session.get('loggedin') %}
+            Hei {{ session.username }} | <a href="{{ url_for('cart') }}">Handlekurv</a> | <a href="{{ url_for('logout') }}">Logg ut</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Logg inn</a>
+        {% endif %}
+    </div>
+</header>
+
+<div class="products">
+    {% for product in products %}
+    <div class="product-card">
+        <img src="{{ product[5] }}" alt="{{ product[1] }}">
+        <h2>{{ product[1] }}</h2>
+        <p>{{ product[2] }}</p>
+        <p>{{ product[3] }} kr</p>
+        {% if product[4] > 0 %}
+            <p style="color:green;">På lager ({{ product[4] }})</p>
+            <a href="{{ url_for('add_to_cart', product_id=product[0]) }}"><button>Kjøp</button></a>
+        {% else %}
+            <p style="color:red;">Utsolgt</p>
+            <button disabled style="background:gray;">Utsolgt</button>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+<footer>
+    &copy; 2025 Smartklokker Nettbutikk
+</footer>
 </body>
 </html>
