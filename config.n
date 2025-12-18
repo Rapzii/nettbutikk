@@ -1,0 +1,4 @@
+MYSQL_USER=zaid
+MYSQL_PASSWORD=rapzi@1234
+MYSQL_DB=nettbutikk
+MYSQL_HOST=localhost

@@ -5,11 +5,24 @@ import MySQLdb.cursors
 app = Flask(__name__)
 app.secret_key = 'superhemmeligkey'
 
-# MySQL-innstillinger
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'zaid'
-app.config['MYSQL_PASSWORD'] = 'rapzi@1234'
-app.config['MYSQL_DB'] = 'nettbutikk'
+# Funksjon for å lese config fra fil
+def load_config(filename):
+    config = {}
+    with open(filename) as f:
+        for line in f:
+            line = line.strip()
+            if line and '=' in line:
+                key, value = line.split('=', 1)
+                config[key.strip()] = value.strip()
+    return config
+
+# Last inn databasekonfigurasjon fra config.n
+config = load_config('config.n')
+
+app.config['MYSQL_HOST'] = config.get('MYSQL_HOST')
+app.config['MYSQL_USER'] = config.get('MYSQL_USER')
+app.config['MYSQL_PASSWORD'] = config.get('MYSQL_PASSWORD')
+app.config['MYSQL_DB'] = config.get('MYSQL_DB')
 
 mysql = MySQL(app)
 
@@ -109,5 +122,4 @@ def logout():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
-
 
